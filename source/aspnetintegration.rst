@@ -120,7 +120,7 @@ The previous `Startup` snippet already showed how a custom middleware class can 
 
 Notice how the `CustomMiddleware` class contains dependencies. Because of this, the `CustomMiddleware` class is resolved from Simple Injector on each request.
 
-In contrast to what the official ASP.NET Core documentation `advises <https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware#writing-middleware>`_, the `RequestDelegate` or `Func<Task> next` delegate can best be passed in using **Method Injection** (through the `Invoke` method), instead of by using Constructor Injection. Reason for this is that this delegate is runtime data and runtime data should `not be passed in through the constructor <https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=99>`_. Moving it to the `Invoke` method makes it possible to reliably verify the application's DI configuration and it simplifies your configuration.
+In contrast to what the official ASP.NET Core documentation `advises <https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware#writing-middleware>`_, the `RequestDelegate` or `Func<Task> next` delegate can best be passed in using **Method Injection** (through the `Invoke` method), instead of by using Constructor Injection. The reason for this is that this delegate is runtime data and runtime data should `not be passed in through the constructor <https://www.cuttingedge.it/blogs/steven/pivot/entry.php?id=99>`_. Moving it to the `Invoke` method makes it possible to reliably verify the application's DI configuration and it simplifies your configuration.
 
 .. _cross-wiring:
 
@@ -129,7 +129,7 @@ Cross-wiring ASP.NET and third party services
 
 When your application code (i.e. a `Controller`) needs a service which integrates with the ASP.NET Core configuration system it is sometimes necessary to cross-wire these dependencies. Cross-wiring is the process where a type is created and maintained by the ASP.NET Core configuration system and is fed to Simple Injector so Simple Injector can use the created instance to supply it as a dependency to your application code.
 
-To use this feature, Simple Injector contains the **CrossWire<TService>** extension method. This method does the required blumbing such as making sure the type is registered with the same lifestyle as configured in ASP.NET Core.
+To use this feature, Simple Injector contains the **CrossWire<TService>** extension method. This method does the required plumbing such as making sure the type is registered with the same lifestyle as configured in ASP.NET Core.
 
 To setup cross-wiring first you must make a call to **EnableSimpleInjectorCrossWiring** on `IServiceCollection` in the `ConfigureServices` method of your `Startup` class.
 
